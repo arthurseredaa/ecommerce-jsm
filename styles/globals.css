@@ -99,8 +99,11 @@ span.text-red {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  text-align: center;
   font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
 }
 
 .products-container {
@@ -316,10 +319,13 @@ span.text-red {
   justify-content: center;
 
 }
-.footer-container .icons{
+.footer-container .icons {
   font-size: 30px;
   display: flex;
   gap: 10px;
+}
+.footer-container .icons .icon-item {
+  cursor: pointer;
 }
 
 .cart-heading{
