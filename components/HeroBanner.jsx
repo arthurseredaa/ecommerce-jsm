@@ -1,22 +1,44 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
+import { getSanityImageUrl } from '../lib/sanityClient';
 
-const HeroBanner = () => {
+const HeroBanner = ({ banner }) => {
+  const {
+    buttonText,
+    description,
+    discount,
+    largeText,
+    midText,
+    product,
+    saleTime,
+    smallText,
+    image,
+  } = banner;
   return (
     <div className="hero-banner-container">
+      <p className="beats-solo">{smallText}</p>
+      <h3>{midText}</h3>
+      <h1>{largeText}</h1>
+      <img
+        src={getSanityImageUrl(image)}
+        alt="Product image"
+        className="hero-banner-image"
+      />
+
       <div>
-        <p className="beats-solo">SMALL TEXT</p>
-        <h3>MIDDLE TEXT</h3>
-        <h1>LARGE TEXT ONE</h1>
-        <img src="" alt="Product image" className="hero-banner-image" />
         <div>
-          <Link href={'/product/ID'} passHref>
-            <button type="button">BUTTON TEXT</button>
+          <Link href={`/product/${product}`} passHref>
+            <button type="button">{buttonText}</button>
           </Link>
-          <div className="desc">
-            <h5>Description</h5>
-            <p>DESCRIPTION</p>
-          </div>
+
+          <p className="discount">
+            {discount} {saleTime}
+          </p>
+        </div>
+        <div className="desc">
+          <h5>Description</h5>
+          <p>{description}</p>
         </div>
       </div>
     </div>

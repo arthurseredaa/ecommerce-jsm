@@ -37,13 +37,8 @@ export default {
       type: 'string',
     },
     {
-      name: 'largeText1',
-      title: 'Large Text1',
-      type: 'string',
-    },
-    {
-      name: 'largeText2',
-      title: 'Large Text2',
+      name: 'largeText',
+      title: 'Large Text',
       type: 'string',
     },
     {
