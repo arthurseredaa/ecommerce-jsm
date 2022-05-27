@@ -2,6 +2,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useRef } from 'react';
 import Link from 'next/link';
+import { getSanityImageUrl } from '../lib/sanityClient';
+import { initializeStripe } from '../lib/initializeStripe';
+import { useStateContext } from '../context/StateContext';
+
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -9,8 +13,7 @@ import {
   AiOutlineShopping,
 } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
-import { useStateContext } from '../context/StateContext';
-import { getSanityImageUrl } from '../lib/sanityClient';
+import toast from 'react-hot-toast';
 
 const Cart = () => {
   const cartRef = useRef();
@@ -23,8 +26,27 @@ const Cart = () => {
     handleRemoveProduct,
   } = useStateContext();
 
-  const handleCheckout = () => {
-    console.log('checkout');
+  const handleCheckout = async () => {
+    const stripe = await initializeStripe();
+
+    const response = await fetch('/api/stripe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cartItems }),
+    });
+
+    if (response.statusCode === 500) {
+      toast.error('Something went wrong 😥');
+      return;
+    }
+
+    const data = await response.json();
+
+    toast.loading('Redirecting...');
+    console.log(data);
+    await stripe.redirectToCheckout({ sessionId: data.id });
   };
 
   const handleDecreaseItemQuantity = (productId) => {
@@ -102,13 +124,13 @@ const Cart = () => {
                           </span>
                         </p>
                       </div>
-                      <buttons
+                      <button
                         type="button"
                         className="remove-item"
                         onClick={() => handleRemoveProduct(item._id)}
                       >
                         <TiDeleteOutline />
-                      </buttons>
+                      </button>
                     </div>
                   </div>
                 </div>
