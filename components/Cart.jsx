@@ -87,7 +87,8 @@ const Cart = () => {
         )}
 
         <div className="product-container">
-          {cartItems.length >= 1 &&
+          {cartItems &&
+            cartItems.length >= 1 &&
             cartItems.map((item) => {
               if (!item) return null;
 
@@ -111,9 +112,7 @@ const Cart = () => {
                           >
                             <AiOutlineMinus />
                           </span>
-                          <span className="num">
-                            {item.quantity}
-                          </span>
+                          <span className="num">{item.quantity}</span>
                           <span
                             className="plus"
                             onClick={() =>

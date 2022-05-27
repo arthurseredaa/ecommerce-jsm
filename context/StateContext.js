@@ -16,11 +16,13 @@ export const StateProvider = ({ children }) => {
     setTotalPrice((prevPrice) => prevPrice + product.price * quantity);
 
     if (isProductInCart) {
-      const updatedCartItems = cartItems.map((item) =>
-        item._id === product._id
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
-      );
+      const updatedCartItems =
+        cartItems &&
+        cartItems.map((item) =>
+          item._id === product._id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
 
       setCartItems(updatedCartItems);
     } else {
@@ -52,27 +54,31 @@ export const StateProvider = ({ children }) => {
   };
 
   const changeProductQuantity = (productId, action = '+') => {
-    const updatedCartItems = cartItems.map((item) => {
-      if (item.quantity === 1 && action === '-') return item;
+    const updatedCartItems =
+      cartItems &&
+      cartItems.map((item) => {
+        if (item.quantity === 1 && action === '-') return item;
 
-      const currentQuantity =
-        action === '-' ? item.quantity - 1 : item.quantity + 1;
+        const currentQuantity =
+          action === '-' ? item.quantity - 1 : item.quantity + 1;
 
-      if (productId === item._id) {
-        return { ...item, quantity: currentQuantity };
-      } else {
-        return item;
-      }
-    });
+        if (productId === item._id) {
+          return { ...item, quantity: currentQuantity };
+        } else {
+          return item;
+        }
+      });
 
     setCartItems(updatedCartItems);
   };
 
   useEffect(() => {
-    const allPrices = cartItems.map((item) => ({
-      id: item._id,
-      price: item.quantity * item.price,
-    }));
+    const allPrices =
+      cartItems &&
+      cartItems.map((item) => ({
+        id: item._id,
+        price: item.quantity * item.price,
+      }));
 
     const subtotal = allPrices.reduce(
       (prevValue, nextValue) => prevValue + nextValue.price,

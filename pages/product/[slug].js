@@ -111,7 +111,7 @@ const ProductDetails = ({ product, similarProducts }) => {
         <h2>You may also like</h2>
         <div className="marquee">
           <div className="maylike-products-container track">
-            {similarProducts.map((item) => (
+            {similarProducts && similarProducts.map((item) => (
               <Product key={item._id} product={item} />
             ))}
           </div>
@@ -125,7 +125,7 @@ export async function getStaticPaths() {
   const query = `*[_type == "product"]`;
   const data = await client.fetch(query);
 
-  const paths = data.map((item) => ({ params: { slug: item.slug.current } }));
+  const paths = data && data.map((item) => ({ params: { slug: item.slug.current } }));
 
   return {
     paths,
