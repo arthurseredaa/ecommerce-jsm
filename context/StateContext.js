@@ -96,6 +96,9 @@ export const StateProvider = ({ children }) => {
         handleAddProduct,
         changeProductQuantity,
         handleRemoveProduct,
+        setCartItems,
+        setTotalPrice,
+        setTotalQuantities,
       }}
     >
       {children}

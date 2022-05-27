@@ -12,7 +12,8 @@ import { client, getSanityImageUrl } from '../../lib/sanityClient';
 import { useStateContext } from '../../context/StateContext';
 
 const ProductDetails = ({ product, similarProducts }) => {
-  const { increaseQuantity, decreaseQuantity, quantity, handleAddProduct } = useStateContext();
+  const { increaseQuantity, decreaseQuantity, quantity, handleAddProduct, setShowCart } =
+    useStateContext();
   const [currentImage, setCurrentImage] = useState(0);
   const { image, name, price, details } = product;
   const [totalPrice, setTotalPrice] = useState(price);
@@ -20,6 +21,12 @@ const ProductDetails = ({ product, similarProducts }) => {
   useEffect(() => {
     setTotalPrice(price * quantity);
   }, [price, quantity]);
+
+  const handleCheckout = async () => {
+    handleAddProduct(product);
+
+    setShowCart(true);
+  };
 
   return (
     <div>
@@ -82,7 +89,7 @@ const ProductDetails = ({ product, similarProducts }) => {
             >
               Add to Cart
             </button>
-            <button type="button" className="buy-now">
+            <button type="button" className="buy-now" onClick={handleCheckout}>
               Buy Now
             </button>
           </div>
