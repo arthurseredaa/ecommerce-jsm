@@ -15,7 +15,10 @@ const ProductDetails = ({ product, similarProducts }) => {
   const { increaseQuantity, decreaseQuantity, quantity, handleAddProduct, setShowCart } =
     useStateContext();
   const [currentImage, setCurrentImage] = useState(0);
-  const { image, name, price, details } = product;
+  const image = product?.image;
+  const name = product?.name;
+  const price = product?.price;
+  const details = product?.details;
   const [totalPrice, setTotalPrice] = useState(price);
 
   useEffect(() => {
