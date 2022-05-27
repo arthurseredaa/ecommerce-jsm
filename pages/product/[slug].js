@@ -50,7 +50,7 @@ const ProductDetails = ({ product, similarProducts }) => {
             />
           </div>
           <div className="small-images-container">
-            {image?.map((item, i) => (
+            {image && image.map((item, i) => (
               <img
                 key={i}
                 src={getSanityImageUrl(item)}
