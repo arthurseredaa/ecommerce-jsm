@@ -12,8 +12,13 @@ import { client, getSanityImageUrl } from '../../lib/sanityClient';
 import { useStateContext } from '../../context/StateContext';
 
 const ProductDetails = ({ product, similarProducts }) => {
-  const { increaseQuantity, decreaseQuantity, quantity, handleAddProduct, setShowCart } =
-    useStateContext();
+  const {
+    increaseQuantity,
+    decreaseQuantity,
+    quantity,
+    handleAddProduct,
+    setShowCart,
+  } = useStateContext();
   const [currentImage, setCurrentImage] = useState(0);
   const image = product?.image;
   const name = product?.name;
@@ -31,13 +36,16 @@ const ProductDetails = ({ product, similarProducts }) => {
     setShowCart(true);
   };
 
+  const currentSanityImage =
+    image?.[currentImage] && getSanityImageUrl(image[currentImage]);
+
   return (
     <div>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
             <img
-              src={getSanityImageUrl(image[currentImage])}
+              src={currentSanityImage || ''}
               className="product-detail-image"
             />
           </div>
